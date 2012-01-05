@@ -24,6 +24,8 @@ class Parser(object):
         def add_subparser(fn):
             self.subparsers[fn.__name__].function = fn
             self.subparsers[fn.__name__].flags = flags
+            # return the Parser object for the subparser.
+            return self.subparsers[fn.__name__]
         return add_subparser
     
     def first_subcommand(self, arguments):
