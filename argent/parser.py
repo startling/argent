@@ -48,7 +48,15 @@ class Parser(object):
             self.subparsers[name].parse(args_to_pass)
         # otherwise, run self.function with the arguments
         else:
-            self.function(*arguments)
+            # get flags from arguments -- flags are anything that starts with `-`.
+            flags = [a for a in arguments if a.startswith("-")]
+            # strip the flags from the arguments list:
+            arguments = [a for a in arguments if not a.startswith("-")]
+            # create a dictionary of used flags here, to be passed as kwargs.
+            # (instead of the flag's actual name, use instead its name without dashes)
+            flag_dict = dict(((f.replace("-", ""), True) for f in flags))
+            # call the function with the arguments and flags.
+            self.function(*arguments, **flag_dict)
 
     def command_line(self):
         """Get arguments from `sys.argv` and parse them."""
