@@ -11,15 +11,20 @@ def nothing(*args, **kwargs):
 
 class Parser(object):
     """A parser for command-line flags and arguments."""
-    def __init__(self, function=nothing):
+    def __init__(self, function=nothing, flags=[]):
         # a dictionary of subparsers; the keys are their names, the values are the actual objects.
         self.subparsers = defaultdict(Parser)
         # this is the function that will get all of the arguments passed to the parser.
         self.function = function
+        # and these are the flags that it can take
+        self.flags = flags
 
-    def subparse(self, fn):
+    def subparse(self, flags=[]):
         """A decorator that creates a new subparser in self.subparsers from the function."""
-        self.subparsers[fn.__name__].function = fn
+        def add_subparser(fn):
+            self.subparsers[fn.__name__].function = fn
+            self.subparsers[fn.__name__].flags = flags
+        return add_subparser
     
     def first_subcommand(self, arguments):
         """Given a list of arguments, return the first argument that corresponds to a subcommand
