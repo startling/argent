@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from sys import argv
 from collections import defaultdict
 
 def nothing(*args, **kwargs):
@@ -43,4 +44,10 @@ class Parser(object):
         # otherwise, run self.function with the arguments
         else:
             self.function(*arguments)
+
+    def command_line(self):
+        """Get arguments from `sys.argv` and parse them."""
+        # since the first argument is the name of the file, ignore it.
+        arguments = argv[1:]
+        self.parse(arguments)
 
