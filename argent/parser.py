@@ -49,25 +49,13 @@ class Parser(object):
         # return the Parser object for the subparser.
         return subparser
 
-    def first_subcommand(self, arguments):
-        """Given a list of arguments, return the first argument that
-        corresponds to a subcommand and its index in the list. If none
-        of them do, return None.
-        """
-        for n, a in enumerate(arguments):
-            if a in self.subparsers.keys():
-                return a, n
-        return None
-
     def parse(self, arguments):
         """Given some command-line arguments, decide what to do with them."""
-        # get the first subcommand of the arguments, or None.
-        subcommand = self.first_subcommand(arguments)
-        # if there is a subcommand:
-        if subcommand:
-            (name, index) = subcommand
+        # if the first argument corresponds to a subparser....
+        if len(arguments) > 1 and arguments[0] in self.subparsers.keys():
+            subcommand = arguments[0]
             # pass all of the subcommands after the subcommand name
-            args_to_pass = arguments[index + 1:]
+            args_to_pass = arguments[1:]
             # give them to the subparser, to parse
             self.subparsers[name].parse(args_to_pass)
         # otherwise, run self.function with the arguments
