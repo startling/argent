@@ -57,10 +57,10 @@ class Parser(object):
             # pass all of the subcommands after the subcommand name
             args_to_pass = arguments[1:]
             # give them to the subparser, to parse
-            self.subparsers[name].parse(args_to_pass)
+            return self.subparsers[name].parse(args_to_pass)
         # otherwise, run self.function with the arguments
         else:
-            self.run(arguments)
+            return self.run(arguments)
 
     def run(self, arguments):
         """Given some command-line arguments, run this Parser's function
@@ -80,10 +80,10 @@ class Parser(object):
         # create a dictionary of used flags here, to be passed as kwargs.
         flag_dict = dict(((f, f in flags) for f in self.flags))
         # call the function with the arguments and flags.
-        self.function(*arguments, **flag_dict)
+        return self.function(*arguments, **flag_dict)
 
     def command_line(self):
         """Get arguments from `sys.argv` and parse them."""
         # since the first argument is the name of the file, ignore it.
         arguments = argv[1:]
-        self.parse(arguments)
+        return self.parse(arguments)
