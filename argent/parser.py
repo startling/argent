@@ -72,22 +72,27 @@ class Parser(object):
             self.subparsers[name].parse(args_to_pass)
         # otherwise, run self.function with the arguments
         else:
-            # get flags from arguments -- flags are anything that starts with
-            # a dash ("-"). Instead of the flag's actual name, use its name
-            # with underscores rather than dashes.
-            flags = [a.replace("-", "_") for a in arguments if
-                    a.startswith("-")]
-            # strip the flags from the arguments list:
-            arguments = [a for a in arguments if not a.startswith("-")]
-            # check that there aren't any flags here that aren't
-            # defined in self.flags; i.e., check that the given flags
-            # is a subset of the possible flags.
-            if not set(self.flags) >= set(flags):
-                raise NameError("Illegal arguments.")
-            # create a dictionary of used flags here, to be passed as kwargs.
-            flag_dict = dict(((f, True) for f in flags))
-            # call the function with the arguments and flags.
-            self.function(*arguments, **flag_dict)
+            self.run(arguments)
+
+    def run(self, arguments):
+        """Given some command-line arguments, run this Parser's function
+        on them. Note that this will __not__ call any subparsers.
+        """
+        # get flags from arguments -- flags are anything that starts with
+        # a dash ("-"). Instead of the flag's actual name, use its name
+        # with underscores rather than dashes.
+        flags = [a.replace("-", "_") for a in arguments if a.startswith("-")]
+        # strip the flags from the arguments list:
+        arguments = [a for a in arguments if not a.startswith("-")]
+        # check that there aren't any flags here that aren't
+        # defined in self.flags; i.e., check that the given flags
+        # is a subset of the possible flags.
+        if not set(self.flags) >= set(flags):
+            raise NameError("Illegal arguments.")
+        # create a dictionary of used flags here, to be passed as kwargs.
+        flag_dict = dict(((f, True) for f in flags))
+        # call the function with the arguments and flags.
+        self.function(*arguments, **flag_dict)
 
     def command_line(self):
         """Get arguments from `sys.argv` and parse them."""
