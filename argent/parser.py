@@ -19,6 +19,11 @@ class Parser(object):
         # and these are the flags that it can take
         self.flags = flags
 
+    @classmethod
+    def decorated(cls, fn):
+        """Create a parser from a decorated function."""
+        return cls(fn)
+    
     def subparse(self, flags=[]):
         """A decorator that creates a new subparser in self.subparsers from the function."""
         def add_subparser(fn):
