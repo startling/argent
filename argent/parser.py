@@ -76,15 +76,20 @@ class Parser(object):
         # defined in self.flags; i.e., check that the given flags
         # is a subset of the possible flags.
         if not set(self.flags) >= set(flags):
-            raise NameError("Illegal arguments.")
-        # create a dictionary of used flags here, to be passed as kwargs.
-        flag_dict = dict(((f, f in flags) for f in self.flags))
-        # create a dictionary of possible args to used args here.
-        # NOTE: since zip wants lists to be of equal length, it'll throw
-        # out invalid arguments. We need to check before then!
-        arg_dict = dict(((a, b) for a, b in zip(self.args, arguments)))
-        # call the function with a combined dictionary of arguments and flags.
-        return self.function(**dict(arg_dict.items() + flag_dict.items()))
+            raise NameError("Illegal flags.")
+        # raise an error if there are more arguments given than what
+        # the function expects.
+        elif not len(self.args) >= len(arguments):
+            raise NameError("Illegal arguments")
+        else:
+            # create a dictionary of used flags here, to be passed as kwargs.
+            flag_dict = dict(((f, f in flags) for f in self.flags))
+            # create a dictionary of possible args to used args here.
+            # NOTE: since zip wants lists to be of equal length, it'll throw
+            # out invalid arguments. We need to check before then!
+            arg_dict = dict(((a, b) for a, b in zip(self.args, arguments)))
+            # call the function with a combined dictionary of args and flags.
+            return self.function(**dict(arg_dict.items() + flag_dict.items()))
 
     def command_line(self):
         """Get arguments from `sys.argv` and parse them."""
