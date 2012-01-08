@@ -20,9 +20,13 @@ class Parser(object):
         self.flags = flags
 
     @classmethod
-    def decorated(cls, fn):
-        """Create a parser from a decorated function."""
-        return cls(fn)
+    def from_function(cls, fn):
+        """Create a parser from a function. This could also be a decorator."""
+        parser = cls(fn)
+        # figure out the parser's name.
+        parser.name = fn.__name__
+        # return it.
+        return parser
     
     def subparse(self, flags=[]):
         """A decorator that creates a new subparser in self.subparsers from the function."""
