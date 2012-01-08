@@ -54,6 +54,9 @@ class Parser(object):
             flags = [a for a in arguments if a.startswith("-")]
             # strip the flags from the arguments list:
             arguments = [a for a in arguments if not a.startswith("-")]
+            # check that there aren't any flags here that aren't defined in self.flags:
+            if not set(self.flags) >= set(flags):
+                raise NameError("Illegal arguments.")
             # create a dictionary of used flags here, to be passed as kwargs.
             # (instead of the flag's actual name, use instead its name without dashes)
             flag_dict = dict(((f.replace("-", ""), True) for f in flags))
