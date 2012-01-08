@@ -52,12 +52,12 @@ class Parser(object):
     def parse(self, arguments):
         """Given some command-line arguments, decide what to do with them."""
         # if the first argument corresponds to a subparser....
-        if len(arguments) > 1 and arguments[0] in self.subparsers.keys():
+        if len(arguments) > 0 and arguments[0] in self.subparsers.keys():
             subcommand = arguments[0]
             # pass all of the subcommands after the subcommand name
             args_to_pass = arguments[1:]
             # give them to the subparser, to parse
-            return self.subparsers[name].parse(args_to_pass)
+            return self.subparsers[subcommand].parse(args_to_pass)
         # otherwise, run self.function with the arguments
         else:
             return self.run(arguments)
