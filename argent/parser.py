@@ -90,7 +90,7 @@ class Parser(object):
         if not set(self.flags) >= set(flags):
             raise NameError("Illegal arguments.")
         # create a dictionary of used flags here, to be passed as kwargs.
-        flag_dict = dict(((f, True) for f in flags))
+        flag_dict = dict(((f, f in flags) for f in self.flags))
         # call the function with the arguments and flags.
         self.function(*arguments, **flag_dict)
 
