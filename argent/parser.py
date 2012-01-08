@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from sys import argv
-from collections import defaultdict
 
 def nothing(*args, **kwargs):
     """A function that does nothing. This is used because it's nice for `Parser` objects
@@ -13,7 +12,7 @@ class Parser(object):
     """A parser for command-line flags and arguments."""
     def __init__(self, function=nothing, flags=[]):
         # a dictionary of subparsers; the keys are their names, the values are the actual objects.
-        self.subparsers = defaultdict(Parser)
+        self.subparsers = {}
         # this is the function that will get all of the arguments passed to the parser.
         self.function = function
         # and these are the flags that it can take
@@ -31,10 +30,14 @@ class Parser(object):
     def subparse(self, flags=[]):
         """A decorator that creates a new subparser in self.subparsers from the function."""
         def add_subparser(fn):
-            self.subparsers[fn.__name__].function = fn
-            self.subparsers[fn.__name__].flags = flags
+            # create a parser from this function...
+            subparser = Parser.from_function(fn)
+            # give it the flags it should have.
+            subparser.flags = flags
+            # add it to the `subparsers` dictionary.
+            self.subparsers[subparser.name] = subparser
             # return the Parser object for the subparser.
-            return self.subparsers[fn.__name__]
+            return subparser
         return add_subparser
     
     def first_subcommand(self, arguments):
