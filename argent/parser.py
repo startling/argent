@@ -30,12 +30,23 @@ class Parser(object):
         # figure out the parser's name.
         parser.name = fn.__name__
         # get the arguments the function expects
-        args, _, _, _ = inspect.getargspec(fn)
+        args, _, _, defaults = inspect.getargspec(fn)
         # flags are the ones that start with an underscore:
         parser.flags = [a for a in args if a.startswith("_")]
         # arguments are the ones that don't.
         parser.args = [a for a in args if not a.startswith("_")]
-        # return it.
+        # if defaults is None, make it an empty list.
+        if defaults:
+            # the necessary args are the all the args except the last n,
+            # where n is the length of `defaults`.
+            parser.necessary_args = parser.args[:-(len(defaults))]
+            # the optional args are the last n args.
+            parser.optional_args = parser.args[-(len(defaults)):]
+        else:
+            # if `defaults` is None, all of the args are necessary.
+            parser.necessary_args = parser.args
+            parser.optional_args = []
+        # return the parser...
         return parser
 
     def subparse(self, fn):
