@@ -16,7 +16,7 @@ def parser():
 # anything that starts with an underscore is a boolean flag;
 # anything that doesn't is a positional argument.
 # docstrings will be used for help messages.
-def hello(something="hello", __f=False):
+def hello(__f, something="hello"):
     "Return `something` if '--f' flag is given; else 'goodbye'"
     if __f:
         return something
@@ -26,5 +26,3 @@ def hello(something="hello", __f=False):
 if __name__ == "__main__":
     # Parse the arguments from the command line and run accordingly.
     parser.command_line()
-
-
