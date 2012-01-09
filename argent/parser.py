@@ -31,6 +31,8 @@ class Parser(object):
         parser = cls(fn)
         # figure out the parser's name.
         parser.name = fn.__name__
+        # the description is the first line of the docstring...
+        parser.description = fn.__doc__.split("\n")[0]
         # get the arguments the function expects
         args, _, _, defaults = inspect.getargspec(fn)
         # flags are the ones that start with an underscore:
