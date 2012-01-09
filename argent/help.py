@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from sys import argv
+from clint.textui import columns
 
 
 def format_list(string, list):
@@ -38,6 +39,16 @@ def parent_list(parser, l):
         l.insert(0, parser.name)
         # and call this function on the parent.
         return parent_list(parser.parent, l)
+
+def word_description(words_and_descriptions):
+    """Given a list of two-tuples, the first item being a word and the second
+    being a description of that word, return a neatly-formatted string with
+    the words and descriptions in columns.
+    """
+    lines = []
+    for word, description in words_and_descriptions:
+        lines.append(columns([" ", 2], [word, 13], [description, 65]))
+    return "\n".join(lines)
 
 
 class HelpFormatter(object):
