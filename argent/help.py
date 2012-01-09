@@ -17,8 +17,8 @@ def format_list(string, list):
     return total
 
 
-def parent_list(parser, string):
-    """Given a parser and a string so far, recursively determine the parentage
+def parent_list(parser, l):
+    """Given a parser and a list so far, recursively determine the parentage
     of the parser.
     """
     # if the parser doesn't have a parent.
@@ -26,13 +26,18 @@ def parent_list(parser, string):
         # and if it was called from the command line
         if argv[0]:
             # use the name it was called as from the command line.
-            return "%s %s" % (argv[0], string)
-        # otherwise, just use the parser's name attribute.
+            l.insert(0, argv[0])
+            return l
+        # otherwise, just insert the parser's name attribute.
         else:
-            return "%s %s" % (self.name, string)
-    # if the parser does have a parent
+            l.insert(0, parser.name)
+            return l
+    # if the parser does have a parent...
     else:
-        return parent_list(parser.parent, "%s %s" % (parser.name, string))
+        # insert this parser's name
+        l.insert(0, parser.name)
+        # and call this function on the parent.
+        return parent_list(parser.parent, l)
 
 
 class HelpFormatter(object):
@@ -43,7 +48,7 @@ class HelpFormatter(object):
     def usage(self):
         "Print a helpful message regarding the usage of this program."
         # determine the start of the usage string...
-        usage = "usage: %s" % parent_list(self.parser, "")
+        usage = "usage: %s" % " ".join(parent_list(self.parser, []))
         # list all of the flags, optional args, and necessary args.
         usage += format_list("[%s] ",
                 [f.replace("_", "-") for f in self.parser.flags])
