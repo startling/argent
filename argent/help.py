@@ -60,4 +60,4 @@ class HelpFormatter(object):
         "Create and print a help message for `self.parser`."
         self.usage()
         print("")
-        print(self.parser.function.__doc__)
+        print(self.parser.description)
