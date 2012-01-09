@@ -24,6 +24,10 @@ class FirstCase(unittest.TestCase):
         "Tes that giving the main command an argument raises an error."
         self.assertRaises(Exception, self.parser.parse, ["boo"])
 
+    def test_not_enough_args(self):
+        "Test that giving too many args raises an error."
+        self.assertRaises(Exception, self.parser.parse, ["something"])
+
     def test_subcommand(self):
         "Test that the `hello subcommand` works without any arguments."
         self.assertParser(["hello"], "goodbye")

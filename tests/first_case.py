@@ -23,6 +23,11 @@ def hello(__f, something="hello"):
     else:
         return "goodbye"
 
+@parser.subparse
+def something(a, b):
+    "Given two arbitrary arguments, return 'something'."
+    return "something"
+
 if __name__ == "__main__":
     # Parse the arguments from the command line and run accordingly.
     parser.command_line()
