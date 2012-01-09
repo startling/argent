@@ -92,6 +92,9 @@ class Parser(object):
         # the function expects.
         elif not len(self.args) >= len(arguments):
             raise NameError("Illegal arguments")
+        # raise an error if there are fewer arguments than are necessary.
+        elif len(arguments) < len(self.necessary_args):
+            raise NameError("Not enough arguments.")
         else:
             # create a dictionary of used flags here, to be passed as kwargs.
             flag_dict = dict(((f, f in flags) for f in self.flags))
