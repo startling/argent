@@ -13,7 +13,7 @@ def nothing(*args, **kwargs):
 
 class Parser(object):
     """A parser for command-line flags and arguments."""
-    def __init__(self, function=nothing, flags=[], help=HelpFormatter):
+    def __init__(self, function=nothing, help=HelpFormatter):
         # a dictionary of subparsers;
         # the keys are their names, the values are the actual objects.
         self.subparsers = {}
@@ -23,7 +23,7 @@ class Parser(object):
         # presumably, a parser created this way is _not_ a subparser.
         self.parent = None
         # and these are the flags that it can take
-        self.flags = flags
+        self.flags = []
         # this is the formatter that the parser will use for its help:
         self.help = help(self)
 
