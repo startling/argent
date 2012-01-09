@@ -2,7 +2,7 @@
 
 from sys import argv
 import inspect
-
+from argent.help import HelpFormatter
 
 def nothing(*args, **kwargs):
     """A function that does nothing. This is used because it's nice for
@@ -13,7 +13,7 @@ def nothing(*args, **kwargs):
 
 class Parser(object):
     """A parser for command-line flags and arguments."""
-    def __init__(self, function=nothing, flags=[]):
+    def __init__(self, function=nothing, flags=[], help=HelpFormatter):
         # a dictionary of subparsers;
         # the keys are their names, the values are the actual objects.
         self.subparsers = {}
@@ -24,11 +24,13 @@ class Parser(object):
         self.parent = None
         # and these are the flags that it can take
         self.flags = flags
+        # this is the formatter that the parser will use for its help:
+        self.help = help(self)
 
     @classmethod
-    def from_function(cls, fn):
+    def from_function(cls, fn, **kwargs):
         """Create a parser from a function. This could also be a decorator."""
-        parser = cls(fn)
+        parser = cls(fn, **kwargs)
         # figure out the parser's name.
         parser.name = fn.__name__
         # the description is the first line of the docstring...
@@ -57,12 +59,14 @@ class Parser(object):
         """A decorator that creates a new subparser in self.subparsers
         from the decorated function.
         """
-        # create a parser from this function...
-        subparser = Parser.from_function(fn)
+        # create a parser from this function
+        # with its parent's help formatter class
+        subparser = Parser.from_function(fn, help=type(self.help))
         # set the subparser's `parent` attribute to this parser.
         subparser.parent = self
         # add it to the `subparsers` dictionary.
         self.subparsers[subparser.name] = subparser
+        # add this parser's help to it.
         # return the Parser object for the subparser.
         return subparser
 
