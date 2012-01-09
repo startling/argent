@@ -20,6 +20,8 @@ class Parser(object):
         # this is the function that will get all of the arguments passed
         # to the parser.
         self.function = function
+        # presumably, a parser created this way is _not_ a subparser.
+        self.parent = None
         # and these are the flags that it can take
         self.flags = flags
 
@@ -55,6 +57,8 @@ class Parser(object):
         """
         # create a parser from this function...
         subparser = Parser.from_function(fn)
+        # set the subparser's `parent` attribute to this parser.
+        subparser.parent = self
         # add it to the `subparsers` dictionary.
         self.subparsers[subparser.name] = subparser
         # return the Parser object for the subparser.
