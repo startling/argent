@@ -5,5 +5,5 @@
 from argent.parser import Parser
 
 
-__version__ = "0.00.0"
+__version__ = "0.01.0"
 __all__ = ["Parser"]
