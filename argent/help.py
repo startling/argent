@@ -78,6 +78,16 @@ class HelpFormatter(object):
         print word_description(
                 [(f.name, f.description) for f in self.parser.flags])
 
+    def print_optional(self):
+        print("optional arguments:")
+        print word_description(
+                [(f.name, f.description) for f in self.parser.optional_args])
+
+    def print_necessary(self):
+        print("optional arguments:")
+        print word_description(
+                [(f.name, f.description) for f in self.parser.necessary_args])
+
     def __call__(self):
         "Create and print a help message for `self.parser`."
         self.usage()
@@ -91,3 +101,10 @@ class HelpFormatter(object):
         if self.parser.subparsers:
             print("")
             self.print_subcommands()
+        # print necessary and optional arguments, if there are any.
+        if self.parser.necessary_args:
+            print("")
+            self.print_necessary
+        if self.parser.optional_args:
+            print("")
+            self.print_optional()
