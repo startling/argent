@@ -10,12 +10,18 @@ def arguments_from_function(fn):
     """
     arguments = [help_arg]
     args, _, _, defaults = getargspec(fn)
-    # find the descriptions of flags and arguments from the docstring:
-    # any string after the first that starts with a name + ":"
-    # has description following it.
+    # find the descriptions and synonyms of flags and arguments from the
+    # docstring: any string after the first that starts with a name + ":"
+    # has a description following it. The name may be some comma-seperated,
+    # in which case those are synonyms and the first one is the canonical name
     descriptions = {}
-    for m in re.finditer(r'^\s*(\w+?):\s?(.+?)\s*$', fn.__doc__, re.MULTILINE):
-        descriptions[m.group(1)] = m.group(2)
+    synonyms = {}
+    for m in re.finditer(r'^\s*(.+?)\s*:\s?(.+?)\s*$', fn.__doc__, re.MULTILINE):
+        these_synonyms = re.split(r',\s?', m.group(1))
+        # the first synonym is the canonical name
+        name = these_synonyms[0].replace("-", "_")
+        descriptions[name] = m.group(2)
+        synonyms[name] = these_synonyms[1:]
     # if defaults is None, make it a zero-length tuple, rather than None.
     # this way we can get its length.
     if not defaults:
@@ -25,7 +31,8 @@ def arguments_from_function(fn):
     defaults = ([None] * (len(args) - len(defaults))) + list(defaults)
     # for each argument, make an Argument object out of it and append it.
     for arg, default in zip(args, defaults):
-        arg_object = Argument(arg, default, descriptions.get(arg, ""), [])
+        arg_object = Argument(arg, default, descriptions.get(arg, ""), 
+                synonyms.get(arg, []))
         arguments.append(arg_object)
     return arguments
 
