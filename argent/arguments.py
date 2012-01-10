@@ -23,7 +23,7 @@ def arguments_from_function(fn):
     # for the arguments that don't have defaults, 
     # that is, all of args except the last `len(defaults)`,
     # make Argument objects and append them to `arguments`
-    for arg in args[:len(defaults)]:
+    for arg in args[len(defaults):]:
         arg_object = Argument(arg)
         arg_object.description = descriptions.get(arg, "")
         arguments.append(arg_object)
