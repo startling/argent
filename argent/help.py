@@ -84,7 +84,7 @@ class HelpFormatter(object):
                 [(f.name, f.description) for f in self.parser.optional_args])
 
     def print_necessary(self):
-        print("optional arguments:")
+        print("necessary arguments:")
         print word_description(
                 [(f.name, f.description) for f in self.parser.necessary_args])
 
@@ -104,7 +104,7 @@ class HelpFormatter(object):
         # print necessary and optional arguments, if there are any.
         if self.parser.necessary_args:
             print("")
-            self.print_necessary
+            self.print_necessary()
         if self.parser.optional_args:
             print("")
             self.print_optional()
