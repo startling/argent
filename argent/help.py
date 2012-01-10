@@ -40,6 +40,7 @@ def parent_list(parser, l):
         # and call this function on the parent.
         return parent_list(parser.parent, l)
 
+
 def word_description(words_and_descriptions):
     """Given a list of two-tuples, the first item being a word and the second
     being a description of that word, return a neatly-formatted string with
@@ -63,7 +64,7 @@ class HelpFormatter(object):
         # list all of the flags, optional args, and necessary args.
         usage += format_list("[%s] ",
                 [f.name for f in self.parser.flags])
-        usage += format_list("[%s] ", 
+        usage += format_list("[%s] ",
                 [f.name for f in self.parser.optional_args])
         usage += format_list("%s ",
                 [f.name for f in self.parser.necessary_args])
@@ -71,12 +72,12 @@ class HelpFormatter(object):
 
     def print_subcommands(self):
         print("Subcommands:")
-        print word_description([(n, f.description) for n, f 
+        print word_description([(n, f.description) for n, f
             in self.parser.subparsers.items()])
-    
+
     def print_flags(self):
         print("optional flags:")
-        print word_description([(", ".join(f.synonym_names), f.description) for 
+        print word_description([(", ".join(f.synonym_names), f.description) for
             f in self.parser.flags])
 
     def print_optional(self):

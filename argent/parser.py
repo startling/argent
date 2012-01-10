@@ -82,7 +82,7 @@ class Parser(object):
         on them. Note that this will __not__ call any subparsers.
         """
         # get flags from arguments -- flags are anything that starts with
-        # a dash ("-"). 
+        # a dash ("-").
         flags = [a for a in arguments if a.startswith("-")]
         # strip the flags from the arguments list:
         arguments = [a for a in arguments if not a.startswith("-")]

@@ -3,8 +3,9 @@
 from inspect import getargspec
 import re
 
+
 def arguments_from_function(fn):
-    """Given a function, use introspective magic to make inferences about 
+    """Given a function, use introspective magic to make inferences about
     its arguments.
     """
     arguments = [help_arg]
@@ -27,6 +28,7 @@ def arguments_from_function(fn):
         arg_object = Argument(arg, default, descriptions.get(arg, ""), [])
         arguments.append(arg_object)
     return arguments
+
 
 class Argument(object):
     "A class to handle arguments and their metadata."
@@ -55,13 +57,13 @@ class Argument(object):
         # synonyms -- other names this thing can be used as.
         # e.g, '--h' can also be '--help'.
         # these follow the rules for `self.name` and `self.underscored`.
-        self.synonym_names = [self.name] + [s.replace("_", "-") 
+        self.synonym_names = [self.name] + [s.replace("_", "-")
                 for s in synonyms]
-        self.synonyms_underscored = [self.underscored] + [s.replace("-", "_") 
-                for s in synonyms] 
+        self.synonyms_underscored = [self.underscored] + [s.replace("-", "_")
+                for s in synonyms]
         # these are __all__ the possible names for this argument
         self.variants = self.synonym_names + self.synonyms_underscored
-    
+
     def is_in(self, list):
         "Determine whether this argument or its variants are in a list."
         for v in self.variants:
@@ -69,6 +71,6 @@ class Argument(object):
                 return True
         return False
 
+
 help_arg = Argument("--h", None, "Display this help message and exit.",
         synonyms=["--help"])
-
