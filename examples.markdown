@@ -1,5 +1,5 @@
 # Examples
-This is a pretty huge list of examples. You can download and test them out from the [`examples` directory)(https://github.com/startling/argent/tree/master/examples), too.
+This is a pretty huge list of examples. You can download and test them out from the [`examples` directory](https://github.com/startling/argent/tree/master/examples), too.
 
 ## Positional Arguments
 You can have positional arguments.
