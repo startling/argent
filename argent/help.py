@@ -58,7 +58,7 @@ class HelpFormatter(object):
     def usage(self):
         "Print a helpful message regarding the usage of this program."
         # determine the start of the usage string...
-        usage = "usage: %s" % " ".join(parent_list(self.parser, []))
+        usage = "usage: %s " % " ".join(parent_list(self.parser, []))
         # list all of the flags, optional args, and necessary args.
         usage += format_list("[%s] ",
                 [f.name for f in self.parser.flags])
