@@ -30,7 +30,7 @@ simplest.command_line()
 This program's help message (run `python simplest.py --help`) is:
 
 ```
-usage: simple.py [--h] 
+usage: simplest.py [--h] 
 
 Prints hello when you call it.
 
@@ -38,11 +38,11 @@ optional flags:
    --h, --help   Display this help message and exit.
 ```
 
-There are more at [this other page](https://github.com/startling/argent/blob/master/examples.markdown)
+There are more over at [this other page](https://github.com/startling/argent/blob/master/examples.markdown).
 
 ## Todo:
-* flags that can take arguments
-* type checking
-* colorized help output?
-* clean up the codebase, as always.
+* Flags that can take arguments -- like `--flag argument`.
+* Type checking; for now you have to assume everything will come in as strings.
+* Colorized help output?
+* Clean up the codebase, as always.
 
