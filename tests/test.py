@@ -27,6 +27,11 @@ class FirstCase(unittest.TestCase):
     def test_not_enough_args(self):
         "Test that giving too many args raises an error."
         self.assertRaises(Exception, self.parser.parse, ["something"])
+    
+    def test_subparsers(self):
+        "Test that the subparsers are added to the main parser correctly."
+        self.assertIn("hello", self.parser.subparsers.keys())
+        self.assertIn("something", self.parser.subparsers.keys())
 
     def test_subcommand(self):
         "Test that the `hello subcommand` works without any arguments."
