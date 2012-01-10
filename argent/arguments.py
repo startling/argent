@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from inspect import getargspec
+
+
 def arguments_from_function(fn):
     """Given a function, use introspective magic to make inferences about 
     its arguments.
