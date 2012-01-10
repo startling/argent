@@ -91,6 +91,8 @@ class Parser(object):
         # is a subset of the possible flags.
         if not set([f.underscored for f in self.flags]) >= set(flags):
             raise NameError("Illegal flags.")
+        elif "__h" in flags:
+            self.help()
         # raise an error if there are more arguments given than what
         # the function expects.
         elif not len(self.args) >= len(arguments):
