@@ -88,7 +88,7 @@ class Parser(object):
         # check that there aren't any flags here that aren't
         # defined in self.flags; i.e., check that the given flags
         # is a subset of the possible flags.
-        if not set([f.underscored for f in self.flags]) >= set(flags):
+        if not set([f.name for f in self.flags]) >= set(flags):
             raise NameError("Illegal flags.")
         elif help_arg.is_in(flags):
             self.help()
