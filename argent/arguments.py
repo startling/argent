@@ -52,5 +52,9 @@ class Argument(object):
             self.necessary = False
         # description is nothing for now.
         self.description = description
+    
+    def is_in(self, list):
+        "Determine whether this argument or its variants are in a list."
+        return self.name in list or self.underscored in list
 
 help_arg = Argument("--h", None, "Display this help message and exit.")
