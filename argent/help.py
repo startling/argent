@@ -70,7 +70,7 @@ class HelpFormatter(object):
 
     def print_subcommands(self):
         print("Subcommands:")
-        print word_description([(n, f.function.__doc__) for n, f 
+        print word_description([(n, f.description) for n, f 
             in self.parser.subparsers.items()])
     
     def print_flags(self):
