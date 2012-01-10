@@ -4,6 +4,7 @@ from sys import argv
 from argent.help import HelpFormatter
 from argent.arguments import arguments_from_function
 
+
 def nothing(*args, **kwargs):
     """A function that does nothing. This is used because it's nice for
     Parser objects to always have a function as their obj.function attribute.
@@ -88,7 +89,7 @@ class Parser(object):
         # check that there aren't any flags here that aren't
         # defined in self.flags; i.e., check that the given flags
         # is a subset of the possible flags.
-        if not set(self.flags) >= set(flags):
+        if not set([f.underscored for f in self.flags]) >= set(flags):
             raise NameError("Illegal flags.")
         # raise an error if there are more arguments given than what
         # the function expects.
@@ -99,11 +100,13 @@ class Parser(object):
             raise NameError("Not enough arguments.")
         else:
             # create a dictionary of used flags here, to be passed as kwargs.
-            flag_dict = dict(((f, f in flags) for f in self.flags))
+            flag_dict = dict(((f.underscored, f.underscored in flags) for f
+                in self.flags))
             # create a dictionary of possible args to used args here.
             # NOTE: since zip wants lists to be of equal length, it'll throw
             # out invalid arguments. We need to check before then!
-            arg_dict = dict(((a, b) for a, b in zip(self.args, arguments)))
+            arg_dict = dict(
+                    ((a.underscored, b) for a, b in zip(self.args, arguments)))
             # call the function with a combined dictionary of args and flags.
             return self.function(**dict(arg_dict.items() + flag_dict.items()))
 
