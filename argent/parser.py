@@ -3,6 +3,7 @@
 from sys import argv
 from argent.help import HelpFormatter
 from argent.arguments import arguments_from_function, help_arg
+from itertools import chain
 
 
 def nothing(*args, **kwargs):
@@ -88,7 +89,8 @@ class Parser(object):
         # check that there aren't any flags here that aren't
         # defined in self.flags; i.e., check that the given flags
         # is a subset of the possible flags.
-        if not set([f.name for f in self.flags]) >= set(flags):
+        if not set(chain(
+                    *[f.synonym_names for f in self.flags])) >= set(flags):
             raise NameError("Illegal flags.")
         elif help_arg.is_in(flags):
             self.help()
