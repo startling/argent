@@ -36,6 +36,10 @@ class FirstCase(unittest.TestCase):
         "Test that the hello subcommand works with the flag '--f'."
         self.assertParser(["hello", "--f"], "hello")
 
+    def test_flag_synonyms(self):
+        "Test that the hello subcommand works with the flag '--flag'."
+        self.assertParser(["hello", "--flag"], "hello")
+
     def test_positional_arguments(self):
         "Test that the hello subcommand works when you give it an argument."
         self.assertParser(["hello", "--f", "vuiqqwibuqw"], "vuiqqwibuqw")
