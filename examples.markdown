@@ -160,31 +160,31 @@ def logical_operations():
     logical_operations.help()
 
 @logical_operations.subparse
-def AND(a, b):
+def AND(__a, __b):
     ""4081 quad 2-input AND gate.
 
-    a: The first input.
-    b: The second input.
+    --a: The first input.
+    --b: The second input.
     ""
-    return a and b
+    return __a and __b
 
 @logical_operations.subparse
-def OR(a, b):
+def OR(__a, __b):
     ""4071 quad 2-input OR gate.
 
-    a: The first input.
-    b: The second input.
+    --a: The first input.
+    --b: The second input.
     ""
-    return a or b
+    return __a or __b
 
 @logical_operations.subparse
-def NAND(a, b):
+def NAND(__a, __b):
     ""4093 quad 2-input NAND (with Schmiit triggers!)
 
-    a: The first input.
-    b: The second input.
+    --a: The first input.
+    --b: The second input.
     ""
-    return not a and b
+    return not __a and __b
 
 logical_operations.command_line()
 ```
@@ -200,22 +200,20 @@ optional flags:
 Subcommands:
    AND           4081 quad 2-input AND gate.                                       
    OR            4071 quad 2-input OR gate.                                        
-   NAND          4093 quad 2-input NAND (with Schmiit triggers!)
+   NAND          4093 quad 2-input NAND (with Schmiit triggers!) 
 ```
 
 Each of the subparsers have help messages, too.
 
 ```
-usage: subcommands.py AND [--h] a b 
+usage: subcommands.py NAND [--h] [--a] [--b] 
 
-4081 quad 2-input AND gate.
+4093 quad 2-input NAND (with Schmiit triggers!)
 
 optional flags:
    --h, --help   Display this help message and exit.                               
-
-necessary arguments:
-   a             The first input.                                                  
-   b             The second input.
+   --a           The first input.                                                  
+   --b           The second input. 
 ```
 
 etc. etc. etc.
