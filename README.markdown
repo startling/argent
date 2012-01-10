@@ -1,13 +1,10 @@
 # Argent.
-Argent is a new argument parser for command-line programs in Python.
-
-## Rationale
-Turns out Python already has objects that can take arbitrary arguments, supply defaults, and do things with them: they're called functions. Argent syntax is just decorated functions. For help messages, Argent uses some introspective magic on these functions and then analyzes your docstrings for more information. And you already detail your arguments meticulously in your docstrings, right?
+Argent is a new argument parser for command-line programs in Python. It turns out Python already has objects that can take arbitrary arguments, supply defaults, and do things with them: they're called functions. For help messages, Argent uses some introspective magic on these functions and then analyzes your docstrings for more information. And you already detail your arguments meticulously in your docstrings, right?
 
 ## Features
 
-* Easy syntax; no cascades of text, as in argparse. Use the Python function syntax you already know and love.
-* Cleverness founded in introspective magic; on the other hand, it's only a little more magic than docutils. No black magic metaclass hacking here.
+* Easy syntax; no cascades of text, as in argparse. Use the Python function syntax you already know and love, with decorators for specifying parsers and subparsers.
+* Cleverness founded in introspective magic; on the other hand, it's only a little more magic than docutils, for example. There's no black magic metaclass hacking here.
 * So long as you format your docstrings how Argent expects you too, you'll get beautiful detailed help messages.
 
 ## Examples
