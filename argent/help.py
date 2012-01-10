@@ -73,11 +73,20 @@ class HelpFormatter(object):
         print word_description([(n, f.function.__doc__) for n, f 
             in self.parser.subparsers.items()])
     
+    def print_flags(self):
+        print("optional flags:")
+        print word_description(
+                [(f.name, f.description) for f in self.parser.flags])
+
     def __call__(self):
         "Create and print a help message for `self.parser`."
         self.usage()
         print("")
         print(self.parser.description)
+        # if there are any flags, list them.
+        if self.parser.flags:
+            print("")
+            self.print_flags()
         # if there are any subparsers, list them.
         if self.parser.subparsers:
             print("")
