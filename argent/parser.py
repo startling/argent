@@ -36,7 +36,10 @@ class Parser(object):
         # figure out the parser's name.
         parser.name = fn.__name__
         # the description is the first line of the docstring...
-        parser.description = fn.__doc__.split("\n")[0]
+        if fn.__doc__:
+            parser.description = fn.__doc__.split("\n")[0]
+        else:
+            parser.description = ""
         # get the arguments the function expects
         args = arguments_from_function(fn)
         # flags are the ones that start with an underscore:

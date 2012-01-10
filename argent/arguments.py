@@ -16,12 +16,14 @@ def arguments_from_function(fn):
     # in which case those are synonyms and the first one is the canonical name
     descriptions = {}
     synonyms = {}
-    for m in re.finditer(r'^\s*(.+?)\s*:\s?(.+?)\s*$', fn.__doc__, re.MULTILINE):
-        these_synonyms = re.split(r',\s?', m.group(1))
-        # the first synonym is the canonical name
-        name = these_synonyms[0].replace("-", "_")
-        descriptions[name] = m.group(2)
-        synonyms[name] = these_synonyms[1:]
+    if fn.__doc__:
+        for m in re.finditer(r'^\s*(.+?)\s*:\s?(.+?)\s*$', fn.__doc__, 
+                re.MULTILINE):
+            these_synonyms = re.split(r',\s?', m.group(1))
+            # the first synonym is the canonical name
+            name = these_synonyms[0].replace("-", "_")
+            descriptions[name] = m.group(2)
+            synonyms[name] = these_synonyms[1:]
     # if defaults is None, make it a zero-length tuple, rather than None.
     # this way we can get its length.
     if not defaults:
