@@ -61,6 +61,18 @@ class FirstCase(unittest.TestCase):
         hello_parser = self.parser.subparsers["hello"]
         assert "--f" in [f.name for f in hello_parser.flags]
 
+    def test_flag_descriptions(self):
+        "Test that argent gets flag descriptions from docstrings correctly."
+        hello_parser = self.parser.subparsers["hello"]
+        [flag] = [f for f in hello_parser.flags if f.name == "--f"]
+        self.assertEqual(flag.description, "a flag")
+
+    def test_arg_descriptions(self):
+        "Test that argent gets arg descriptions from docstrings correctly."
+        hello_parser = self.parser.subparsers["hello"]
+        [arg] = [a for a in hello_parser.args if a.name == "something"]
+        self.assertEqual(arg.description, "some junk, idk.")
+
 
 if __name__ == "__main__":
     unittest.main()
