@@ -24,13 +24,13 @@ def arguments_from_function(fn):
     defaults = ([None] * (len(args) - len(defaults))) + list(defaults)
     # for each argument, make an Argument object out of it and append it.
     for arg, default in zip(args, defaults):
-        arg_object = Argument(arg, default, descriptions.get(arg, ""))
+        arg_object = Argument(arg, default, descriptions.get(arg, ""), [])
         arguments.append(arg_object)
     return arguments
 
 class Argument(object):
     "A class to handle arguments and their metadata."
-    def __init__(self, name, default=None, description=""):
+    def __init__(self, name, default=None, description="", synonyms=None):
         # `self.name` is what we get but with no underscores and all dashes.
         self.name = name.replace("_", "-")
         # `self.underscored` is the opposite.
@@ -52,9 +52,23 @@ class Argument(object):
             self.necessary = False
         # description is nothing for now.
         self.description = description
+        # synonyms -- other names this thing can be used as.
+        # e.g, '--h' can also be '--help'.
+        # these follow the rules for `self.name` and `self.underscored`.
+        self.synonym_names = [self.name] + [s.replace("_", "-") 
+                for s in synonyms]
+        self.synonyms_underscored = [self.underscored] + [s.replace("-", "_") 
+                for s in synonyms] 
+        # these are __all__ the possible names for this argument
+        self.variants = self.synonym_names + self.synonyms_underscored
     
     def is_in(self, list):
         "Determine whether this argument or its variants are in a list."
-        return self.name in list or self.underscored in list
+        for v in self.variants:
+            if v in list:
+                return True
+        return False
 
-help_arg = Argument("--h", None, "Display this help message and exit.")
+help_arg = Argument("--h", None, "Display this help message and exit.",
+        synonyms=["--help"])
+
