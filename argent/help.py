@@ -61,9 +61,11 @@ class HelpFormatter(object):
         usage = "usage: %s" % " ".join(parent_list(self.parser, []))
         # list all of the flags, optional args, and necessary args.
         usage += format_list("[%s] ",
-                [f.replace("_", "-") for f in self.parser.flags])
-        usage += format_list("[%s] ", self.parser.optional_args)
-        usage += format_list("%s ", self.parser.necessary_args)
+                [f.name for f in self.parser.flags])
+        usage += format_list("[%s] ", 
+                [f.name for f in self.parser.optional_args])
+        usage += format_list("%s ",
+                [f.name for f in self.parser.necessary_args])
         print(usage)
 
     def print_subcommands(self):

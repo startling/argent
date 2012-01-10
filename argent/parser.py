@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from sys import argv
-import inspect
 from argent.help import HelpFormatter
+from argent.arguments import arguments_from_function
 
 def nothing(*args, **kwargs):
     """A function that does nothing. This is used because it's nice for
@@ -36,22 +36,14 @@ class Parser(object):
         # the description is the first line of the docstring...
         parser.description = fn.__doc__.split("\n")[0]
         # get the arguments the function expects
-        args, _, _, defaults = inspect.getargspec(fn)
+        args = arguments_from_function(fn)
         # flags are the ones that start with an underscore:
-        parser.flags = [a for a in args if a.startswith("_")]
+        parser.flags = [a for a in args if a.flag]
         # arguments are the ones that don't.
-        parser.args = [a for a in args if not a.startswith("_")]
-        # if defaults is None, make it an empty list.
-        if defaults:
-            # the necessary args are the all the args except the last n,
-            # where n is the length of `defaults`.
-            parser.necessary_args = parser.args[:-(len(defaults))]
-            # the optional args are the last n args.
-            parser.optional_args = parser.args[-(len(defaults)):]
-        else:
-            # if `defaults` is None, all of the args are necessary.
-            parser.necessary_args = parser.args
-            parser.optional_args = []
+        parser.args = [a for a in args if not a.flag]
+        # determine which arguments are necessary and which aren't.
+        parser.necessary_args = [a for a in parser.args if a.necessary]
+        parser.optional_args = [a for a in parser.args if not a.necessary]
         # return the parser...
         return parser
 
