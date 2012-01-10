@@ -9,24 +9,21 @@ def arguments_from_function(fn):
     """
     arguments = []
     args, _, _, defaults = getargspec(fn)
-    # getargspec annoyingly returns None if there are none,
-    # so turn it into an empty tuple if it's None.
-    if defaults == None:
-        defaults = ()
     # find the descriptions of flags and arguments from the docstring:
     # any string after the first that starts with a name + ":"
     # has description following it.
     descriptions = {}
     for m in re.finditer(r'^\s*(\w+?):\s?(.+?)\s*$', fn.__doc__, re.MULTILINE):
         descriptions[m.group(1)] = m.group(2)
-    # for the arguments that don't have defaults, 
-    # that is, all of args except the last `len(defaults)`,
-    # make Argument objects and append them to `arguments`
-    for arg in args[len(defaults):]:
-        arg_object = Argument(arg, description=descriptions.get(arg, ""))
-        arguments.append(arg_object)
-    # for the last `len(defaults)`, make 
-    for arg, default in zip(args[len(args)-len(defaults):], defaults):
+    # if defaults is None, make it a zero-length tuple, rather than None.
+    # this way we can get its length.
+    if not defaults:
+        defaults = ()
+    # pad the defaults list with Nones in order to give it the same number
+    # of items as args, so we can zip them.
+    defaults = ([None] * (len(args) - len(defaults))) + list(defaults)
+    # for each argument, make an Argument object out of it and append it.
+    for arg, default in zip(args, defaults):
         arg_object = Argument(arg, default, descriptions.get(arg, ""))
         arguments.append(arg_object)
     return arguments
