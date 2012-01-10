@@ -30,5 +30,4 @@ def something(a, b):
 
 if __name__ == "__main__":
     # Parse the arguments from the command line and run accordingly.
-    #parser.command_line()
-    hello.help()
+    parser.command_line()
