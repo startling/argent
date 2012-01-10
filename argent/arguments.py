@@ -3,7 +3,6 @@
 from inspect import getargspec
 import re
 
-
 def arguments_from_function(fn):
     """Given a function, use introspective magic to make inferences about 
     its arguments.
@@ -24,19 +23,17 @@ def arguments_from_function(fn):
     # that is, all of args except the last `len(defaults)`,
     # make Argument objects and append them to `arguments`
     for arg in args[len(defaults):]:
-        arg_object = Argument(arg)
-        arg_object.description = descriptions.get(arg, "")
+        arg_object = Argument(arg, description=descriptions.get(arg, ""))
         arguments.append(arg_object)
     # for the last `len(defaults)`, make 
     for arg, default in zip(args[len(args)-len(defaults):], defaults):
-        arg_object = Argument(arg, default)
-        arg_object.description = descriptions.get(arg, "")
+        arg_object = Argument(arg, default, descriptions.get(arg, ""))
         arguments.append(arg_object)
     return arguments
 
 class Argument(object):
     "A class to handle arguments and their metadata."
-    def __init__(self, name, default=None):
+    def __init__(self, name, default=None, description=""):
         # `self.name` is what we get but with no underscores and all dashes.
         self.name = name.replace("_", "-")
         # `self.underscored` is the opposite.
@@ -57,4 +54,4 @@ class Argument(object):
         else:
             self.necessary = False
         # description is nothing for now.
-        self.description = ""
+        self.description = description
