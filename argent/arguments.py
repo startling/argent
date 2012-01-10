@@ -40,7 +40,7 @@ class Argument(object):
         # `self.name` is what we get but with no underscores and all dashes.
         self.name = name.replace("_", "-")
         # `self.underscored` is the opposite.
-        self.underscored = name.replace("_", "-")
+        self.underscored = name.replace("-", "_")
         # this is the default value; can be None if there isn't one.
         self.default = default
         # if the name starts with an underscore or dash, it's a flag,
