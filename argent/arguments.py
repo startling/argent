@@ -7,7 +7,7 @@ def arguments_from_function(fn):
     """Given a function, use introspective magic to make inferences about 
     its arguments.
     """
-    arguments = []
+    arguments = [help_arg]
     args, _, _, defaults = getargspec(fn)
     # find the descriptions of flags and arguments from the docstring:
     # any string after the first that starts with a name + ":"
@@ -52,3 +52,5 @@ class Argument(object):
             self.necessary = False
         # description is nothing for now.
         self.description = description
+
+help_arg = Argument("--h", None, "Display this help message and exit.")
