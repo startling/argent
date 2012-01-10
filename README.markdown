@@ -2,7 +2,7 @@
 Argent is a new argument parser for command-line programs in Python.
 
 ## Rationale
-Turns out Python already has an objects that can take arbitrary arguments, supply defaults, and do things with them: they're called functions. Argent syntax is just decorated functions. For help messages, Argent uses some introspective magic on these functions and then analyzes your docstrings for more information. And you already detail your arguments meticulously in your docstrings, right?
+Turns out Python already has objects that can take arbitrary arguments, supply defaults, and do things with them: they're called functions. Argent syntax is just decorated functions. For help messages, Argent uses some introspective magic on these functions and then analyzes your docstrings for more information. And you already detail your arguments meticulously in your docstrings, right?
 
 ## Features
 
@@ -38,11 +38,13 @@ optional flags:
    --h, --help   Display this help message and exit.
 ```
 
-There are more over at [this other page](https://github.com/startling/argent/blob/master/examples.markdown).
+
+[Here's](https://github.com/startling/argent/blob/master/examples/subcommands.py) a more featureful example, and there are more over at [this other page](https://github.com/startling/argent/blob/master/examples.markdown).
 
 ## Todo:
 * Flags that can take arguments -- like `--flag argument`.
 * Type checking; for now you have to assume everything will come in as strings.
 * Colorized help output?
 * Clean up the codebase, as always.
+* More documentation.
 
