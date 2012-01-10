@@ -17,7 +17,11 @@ def parser():
 # anything that doesn't is a positional argument.
 # docstrings will be used for help messages.
 def hello(__f, something="hello"):
-    "Return `something` if '--f' flag is given; else 'goodbye'"
+    """Return `something` if '--f' flag is given; else 'goodbye'
+    
+    --f, --flag: a flag
+    something: some junk, idk.
+    """
     if __f:
         return something
     else:
