@@ -4,6 +4,7 @@
 from sys import argv
 from clint.textui import columns
 
+
 def format_list(string, list):
     """Given a string and a list, return the string with each list item
     interpolated into as by %.
@@ -75,8 +76,8 @@ class HelpFormatter(object):
     
     def print_flags(self):
         print("optional flags:")
-        print word_description(
-                [(f.name, f.description) for f in self.parser.flags])
+        print word_description([(", ".join(f.synonym_names), f.description) for 
+            f in self.parser.flags])
 
     def print_optional(self):
         print("optional arguments:")
