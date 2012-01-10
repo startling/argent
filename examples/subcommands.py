@@ -10,30 +10,30 @@ def logical_operations():
     logical_operations.help()
 
 @logical_operations.subparse
-def AND(a, b):
+def AND(__a, __b):
     """4081 quad 2-input AND gate.
 
-    a: The first input.
-    b: The second input.
+    --a: The first input.
+    --b: The second input.
     """
-    return a and b
+    return __a and __b
 
 @logical_operations.subparse
-def OR(a, b):
+def OR(__a, __b):
     """4071 quad 2-input OR gate.
 
-    a: The first input.
-    b: The second input.
+    --a: The first input.
+    --b: The second input.
     """
-    return a or b
+    return __a or __b
 
 @logical_operations.subparse
-def NAND(a, b):
+def NAND(__a, __b):
     """4093 quad 2-input NAND (with Schmiit triggers!)
 
-    a: The first input.
-    b: The second input.
+    --a: The first input.
+    --b: The second input.
     """
-    return not a and b
+    return not __a and __b
 
 logical_operations.command_line()
