@@ -102,7 +102,7 @@ class Parser(object):
         else:
             # create a dictionary of used flags here, to be passed as kwargs.
             flag_dict = dict(((f.underscored, f.is_in(flags)) for f
-                in self.flags))
+                in self.flags if f != help_arg))
             # create a dictionary of possible args to used args here.
             # NOTE: since zip wants lists to be of equal length, it'll throw
             # out invalid arguments. We need to check before then!
