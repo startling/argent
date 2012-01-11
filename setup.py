@@ -1,9 +1,9 @@
 from distutils.core import setup
-import argent
+
 
 setup(
     name = "argent",
-    version = argent.__version__,
+    version = "0.01.0"
     author = "startling",
     author_email = "tdixon51793@gmail.com",
     url = "https://github.com/startling/argent",
