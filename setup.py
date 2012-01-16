@@ -3,7 +3,7 @@ from distutils.core import setup
 
 setup(
     name = "argent",
-    version = "0.01.0",
+    version = "0.01.1",
     author = "startling",
     author_email = "tdixon51793@gmail.com",
     url = "https://github.com/startling/argent",
