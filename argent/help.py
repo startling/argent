@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from os.path import basename
 from sys import argv
 from clint.textui import columns
 
@@ -27,7 +28,7 @@ def parent_list(parser, l):
         # and if it was called from the command line
         if argv[0]:
             # use the name it was called as from the command line.
-            l.insert(0, argv[0])
+            l.insert(0, basename(argv[0]))
             return l
         # otherwise, just insert the parser's name attribute.
         else:
